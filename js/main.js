@@ -1,5 +1,5 @@
-const provider = new ethers.providers.Web3Provider(window.ethereum);
-const signer = provider.getSigner();
+const provider = new ethers.providers.Web3Provider(window.ethereum)
+const signer = provider.getSigner()
 
 // You can also use an ENS name for the contract address
 const kattAddress = "0x658dcfaeec83ab0bf6857b2603f94fc948ba86a9";
