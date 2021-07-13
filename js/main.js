@@ -1,6 +1,8 @@
 //const provider = new ethers.providers.Web3Provider(window.etherium)
 //window.provider = new ethers.providers.InfuraProvider("ropsten");
-window.provider = new ethers.providers.InfuraProvider(window.etherium);
+const testNet = "ropsten";
+const infuraProjectId = "86a437462c0b40b18dcc634cfb6b0a6a";
+window.provider = new ethers.providers.InfuraProvider(testNet, infuraProjectId);
 //const signer = provider.getSigner()
 
 // You can also use an ENS name for the contract address
