@@ -16,4 +16,4 @@ const kattAbi = [
 
 const kattContract = new ethers.Contract(kattAddress, kattAbi, provider);
 
-console.log(kattContract);
+console.log(await kattContract.name());
