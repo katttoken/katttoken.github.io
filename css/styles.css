@@ -8,3 +8,8 @@ body {
   width: 40px;
   margin-bottom: 5px;
 }
+
+.px-3 {
+    padding-left: 2.75rem;
+    padding-right: 2.75rem;
+}
