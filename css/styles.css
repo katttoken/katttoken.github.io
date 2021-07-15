@@ -13,3 +13,20 @@ body {
     padding-left: 2.75rem;
     padding-right: 2.75rem;
 }
+
+.text-5xl {
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.font-akaya {
+  font-family: 'Akaya Kanadaka', cursive;
+}
+
+.modal {
+  transition: opacity 0.25s ease;
+}
+body.modal-active {
+  overflow-x: hidden;
+  overflow-y: visible !important;
+}
