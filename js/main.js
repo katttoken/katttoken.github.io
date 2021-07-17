@@ -6,7 +6,7 @@ window.provider = new ethers.providers.InfuraProvider(testNet, infuraProjectId);
 //const signer = provider.getSigner()
 
 // You can also use an ENS name for the contract address
-const kattAddress = "0x658dcfaeec83ab0bf6857b2603f94fc948ba86a9";
+const kattAddress = "0xc481676320d18c7459fa979128d0139d58c5f3cd";
 
 // The ERC-20 Contract ABI, which is a common contract interface
 // for tokens (this is the Human-Readable ABI format)
