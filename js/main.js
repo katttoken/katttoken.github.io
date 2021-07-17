@@ -36,12 +36,16 @@ let infuraProvider = new ethers.providers.InfuraProvider("ropsten", infuraProjec
 let infuraKattContract = new ethers.Contract(kattAddress, kattAbi, infuraProvider);
 
 async function connectWallet() {
-  window.ethereum.enable().then(async function() {
-    provider = await new ethers.providers.Web3Provider(window.ethereum);
-    signer = await provider.getSigner();
-    kattContract = await new ethers.Contract(kattAddress, kattAbi, signer);
-    // getNetworkStateChangedFunctions();
-  });
+  // window.ethereum.enable().then(async function() {
+  //   provider = await new ethers.providers.Web3Provider(window.ethereum);
+  //   signer = await provider.getSigner();
+  //   kattContract = await new ethers.Contract(kattAddress, kattAbi, signer);
+  //   // getNetworkStateChangedFunctions();
+  // });
+  await window.ethereum.enable();
+  provider = await new ethers.providers.Web3Provider(window.ethereum);
+  signer = await provider.getSigner();
+  kattContract = await new ethers.Contract(kattAddress, kattAbi, signer);
 }
 
 async function isWalletConnected() {
@@ -56,19 +60,12 @@ async function isWalletConnected() {
 
 async function joinLottery() {
   await connectWallet();
-  if (await isWalletConnected())
-    return await kattContract.joinLottery();
-  else
-    return "Wallet not connected";
+  return await kattContract.joinLottery();
 }
 
 async function claimLottery() {
   await connectWallet();
-  var _currentEra = await infuraKattContract.currentEra();
-  if (await isWalletConnected())
-    return await kattContract.withdrawAllLotteryWins(_currentEra);
-  else
-    return "Wallet not connected";
+  return await kattContract.withdrawAllLotteryWins(_currentEra);
 }
 
 function BigNumberToInt(x) {
