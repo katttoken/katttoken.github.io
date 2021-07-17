@@ -1,17 +1,4 @@
-//const provider = new ethers.providers.Web3Provider(window.etherium)
-//window.provider = new ethers.providers.InfuraProvider("ropsten");
-// const testNet = "ropsten";
-// const infuraProjectId = "86a437462c0b40b18dcc634cfb6b0a6a";
-// window.provider = new ethers.providers.InfuraProvider(testNet, infuraProjectId);
-//const signer = provider.getSigner()
-
-let provider;
-let kattContract;
-let signer;
-
-// You can also use an ENS name for the contract address
 const kattAddress = "0xc481676320d18c7459fa979128d0139d58c5f3cd";
-
 // The ERC-20 Contract ABI, which is a common contract interface
 // for tokens (this is the Human-Readable ABI format)
 const kattAbi = [
@@ -37,15 +24,22 @@ const kattAbi = [
   "function getMemberBetWin(uint256 _betID, address _member) view returns (uint value)"
 ];
 
-// x = await kattContract.getDayEmission();
-// BigNumberToInt(x)
+// main provider
+let provider;
+let kattContract;
+let signer;
+
+// infura provider
+let infuraProjectId = "86a437462c0b40b18dcc634cfb6b0a6a";
+let infuraProvider = new ethers.providers.InfuraProvider("ropsten", infuraProjectId);
+let infuraKattContract = new ethers.Contract(kattAddress, kattAbi, infuraProvider);
 
 async function connectWallet() {
   window.ethereum.enable().then(async function() {
     provider = await new ethers.providers.Web3Provider(window.ethereum);
     window.signer = provider.getSigner();
     kattContract = await new ethers.Contract(kattAddress, kattAbi, window.signer);
-    getOverviewData();
+    getNetworkStateChangedFunctions();
   });
 }
 
@@ -58,6 +52,7 @@ function BigNumberToInt(x) {
 }
 
 $(function() {
+  getOverviewData();
 });
 
 function getOverviewData() {
@@ -65,15 +60,16 @@ function getOverviewData() {
     console.log(data);
   });
 
-  $.when(kattContract.totalSupply()).then(function( data, textStatus, jqXHR ) {
+  $.when(infuraKattContract.totalSupply()).then(function( data, textStatus, jqXHR ) {
     $("#data-max-supply").html(BigNumberToInt(data));
   });
+}
 
+function getNetworkStateChangedFunctions() {
   $("#btn-join-lottery").click(async function() {
     var _success = await joinLottery();
     var _message = _success ? "Join successfully" : "Something went wrong";
     $("#lottery-join-message").html(_message);
     console.log(_success);
   });
-
 }
