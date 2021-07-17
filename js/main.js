@@ -1,9 +1,16 @@
 //const provider = new ethers.providers.Web3Provider(window.etherium)
 //window.provider = new ethers.providers.InfuraProvider("ropsten");
-const testNet = "ropsten";
-const infuraProjectId = "86a437462c0b40b18dcc634cfb6b0a6a";
-window.provider = new ethers.providers.InfuraProvider(testNet, infuraProjectId);
+// const testNet = "ropsten";
+// const infuraProjectId = "86a437462c0b40b18dcc634cfb6b0a6a";
+// window.provider = new ethers.providers.InfuraProvider(testNet, infuraProjectId);
 //const signer = provider.getSigner()
+
+let provider;
+let kattContract;
+window.ethereum.enable().then(function() {
+  provider = new ethers.providers.Web3Provider(window.ethereum);
+  kattContract = new ethers.Contract(kattAddress, kattAbi, provider);
+});
 
 // You can also use an ENS name for the contract address
 const kattAddress = "0xc481676320d18c7459fa979128d0139d58c5f3cd";
@@ -33,14 +40,10 @@ const kattAbi = [
   "function getMemberBetWin(uint256 _betID, address _member) view returns (uint value)"
 ];
 
-const kattContract = new ethers.Contract(kattAddress, kattAbi, provider);
-
 // x = await kattContract.getDayEmission();
 // BigNumberToInt(x)
 
 async function connectWallet() {
-  let provider;
-  window.ethereum.enable().then(provider = new ethers.providers.Web3Provider(window.ethereum));
   window.signer = provider.getSigner();
 }
 
