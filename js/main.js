@@ -44,15 +44,31 @@ async function connectWallet() {
   });
 }
 
+async function isWalletConnected() {
+  var _connected = true;
+  try {
+    var _address = signer.getAddress();
+  } catch (error) {
+    _connected = false;
+  }
+  return _connected;
+}
+
 async function joinLottery() {
   await connectWallet();
-  return await kattContract.joinLottery();
+  if (await isWalletConnected())
+    return await kattContract.joinLottery();
+  else
+    return "Wallet not connected";
 }
 
 async function claimLottery() {
   await connectWallet();
   var _currentEra = await infuraKattContract.currentEra();
-  return await kattContract.withdrawAllLotteryWins(_currentEra);
+  if (await isWalletConnected())
+    return await kattContract.withdrawAllLotteryWins(_currentEra);
+  else
+    return "Wallet not connected";
 }
 
 function BigNumberToInt(x) {
@@ -60,8 +76,8 @@ function BigNumberToInt(x) {
 }
 
 $(function() {
-  getOverviewData();
   getNetworkStateChangedFunctions();
+  getOverviewData();
 });
 
 function getOverviewData() {
