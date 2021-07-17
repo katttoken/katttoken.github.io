@@ -45,12 +45,12 @@ async function connectWallet() {
 }
 
 async function joinLottery() {
-  await connectWallet();
+  // await connectWallet();
   return kattContract.joinLottery();
 }
 
 async function claimLottery() {
-  await connectWallet();
+  // await connectWallet();
   var _currentEra = await infuraKattContract.currentEra();
   return kattContract.withdrawAllLotteryWins(_currentEra);
 }
@@ -91,39 +91,3 @@ function getNetworkStateChangedFunctions() {
     $("#lottery-claim-loading").hide();
   });
 }
-
-// Modals
-
-// var openmodaljoinlottery = document.querySelectorAll('.modal-join-lottery-open')
-// for (var i = 0; i < openmodaljoinlottery.length; i++) {
-//   openmodaljoinlottery[i].addEventListener('click', function(event){
-//   event.preventDefault()
-//   toggleModalJoinLottery()
-//   })
-// }
-// const overlay = document.querySelector('.modal-overlay')
-// overlay.addEventListener('click', toggleModalJoinLottery)
-
-// var closemodaljoinlottery = document.querySelectorAll('.modal-close')
-// for (var i = 0; i < closemodaljoinlottery.length; i++) {
-//   closemodaljoinlottery[i].addEventListener('click', toggleModalJoinLottery)
-// }      
-// document.onkeydown = function(evt) {
-//   evt = evt || window.event
-//   var isEscape = false
-//   if ("key" in evt) {
-//   isEscape = (evt.key === "Escape" || evt.key === "Esc")
-//   } else {
-//   isEscape = (evt.keyCode === 27)
-//   }
-//   if (isEscape && document.body.classList.contains('modal-active')) {
-//     toggleModalJoinLottery()
-//   }
-// }; 
-// function toggleModalJoinLottery() {
-//   const body = document.querySelector('body')
-//   const modal = document.querySelector('.modal-join-lottery')
-//   modal.classList.toggle('opacity-0')
-//   modal.classList.toggle('pointer-events-none')
-//   body.classList.toggle('modal-active')
-// }
