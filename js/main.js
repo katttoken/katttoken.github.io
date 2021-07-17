@@ -75,16 +75,20 @@ function getOverviewData() {
 
 function getNetworkStateChangedFunctions() {
   $("#btn-join-lottery").click(async function() {
+    $("#lottery-join-loading").show();
     var _success = await joinLottery();
     var _message = _success ? "Join successfully" : "Something went wrong";
     $("#lottery-join-message").html(_message);
     console.log(_success);
+    $("#lottery-join-loading").hide();
   });
   $("#btn-claim-lottery").click(async function() {
+    $("#lottery-claim-loading").show();
     var _success = await claimLottery();
     var _message = _success ? "Claim successfully" : "Something went wrong";
     $("#lottery-claim-message").html(_message);
     console.log(_success);
+    $("#lottery-claim-loading").hide();
   });
 }
 
