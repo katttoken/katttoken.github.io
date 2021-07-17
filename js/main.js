@@ -41,10 +41,10 @@ const kattAbi = [
 // BigNumberToInt(x)
 
 async function connectWallet() {
-  window.ethereum.enable().then(function() {
-    provider = new ethers.providers.Web3Provider(window.ethereum);
+  window.ethereum.enable().then(async function() {
+    provider = await new ethers.providers.Web3Provider(window.ethereum);
     window.signer = provider.getSigner();
-    kattContract = new ethers.Contract(kattAddress, kattAbi, provider);
+    kattContract = await new ethers.Contract(kattAddress, kattAbi, window.signer);
     getOverviewData();
   });
 }
