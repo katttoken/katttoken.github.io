@@ -86,9 +86,10 @@ function getNetworkStateChangedFunctions() {
     $("#lottery-claim-loading").show();
     claimLottery().then((_success) => {
       $("#lottery-claim-message").html(_success);
+      $("#lottery-claim-loading").hide();
     }).catch((error) => {
       $("#lottery-claim-message").html(error);
+      $("#lottery-claim-loading").hide();
     });
-    $("#lottery-claim-loading").hide();
   });
 }
