@@ -58,7 +58,6 @@ function BigNumberToInt(x) {
 }
 
 $(function() {
-  getOverviewData();
 });
 
 function getOverviewData() {
