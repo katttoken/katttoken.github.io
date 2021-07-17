@@ -45,14 +45,14 @@ async function connectWallet() {
 }
 
 async function joinLottery() {
-  // await connectWallet();
-  return kattContract.joinLottery();
+  await connectWallet();
+  return await kattContract.joinLottery();
 }
 
 async function claimLottery() {
-  // await connectWallet();
+  await connectWallet();
   var _currentEra = await infuraKattContract.currentEra();
-  return kattContract.withdrawAllLotteryWins(_currentEra);
+  return await kattContract.withdrawAllLotteryWins(_currentEra);
 }
 
 function BigNumberToInt(x) {
