@@ -26,7 +26,7 @@
     </style>
   </head>
   <body class="leading-normal tracking-normal text-white gradient" style="font-family: 'Kanit', sans-serif;"
-    x-data="{ showLotteryJoinModal : false,  showLotteryClaimModal : false}">
+    x-data="{ showLotteryJoinModal : false,  showLotteryClaimModal : false, showHowtoModal : false}">
     <!--Nav-->
     <nav id="header" class="fixed w-full z-30 top-0 text-white">
       <div class="w-full mx-auto flex flex-wrap items-center justify-between mt-0 py-2">
@@ -95,7 +95,8 @@
           <p class="leading-normal text-2xl mb-8">
             An asset that stores zero value, created by dreamers for the purpose of entertaining. No more cheaters can rig your games!
           </p>
-          <button class="modal-join-lottery-open mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full my-6 py-4 px-6 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
+          <button class="mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full my-6 py-4 px-6 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
+            @click="showLotteryJoinModal = !showLotteryJoinModal">
             Free daily lottery 	&#187;
           </button>
         </div>
@@ -558,7 +559,7 @@
               </svg>
             </div>
           </div>
-          <div class="flex justify-left">
+          <div class="flex justify-left pb-3">
             Connect wallet to see all lottery wins
           </div>
           <div class="flex justify-center pt-2">
