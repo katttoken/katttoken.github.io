@@ -84,10 +84,11 @@ function getNetworkStateChangedFunctions() {
   });
   $("#btn-claim-lottery").click(async function() {
     $("#lottery-claim-loading").show();
-    var _success = await claimLottery();
-    var _message = _success ? "Claim successfully" : "Something went wrong";
-    $("#lottery-claim-message").html(_message);
-    console.log(_success);
+    claimLottery().then((_success) => {
+      $("#lottery-claim-message").html(_success);
+    }).catch((error) => {
+      $("#lottery-claim-message").html(error);
+    });
     $("#lottery-claim-loading").hide();
   });
 }
