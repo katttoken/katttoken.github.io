@@ -7,10 +7,7 @@
 
 let provider;
 let kattContract;
-window.ethereum.enable().then(function() {
-  provider = new ethers.providers.Web3Provider(window.ethereum);
-  kattContract = new ethers.Contract(kattAddress, kattAbi, provider);
-});
+let signer;
 
 // You can also use an ENS name for the contract address
 const kattAddress = "0xc481676320d18c7459fa979128d0139d58c5f3cd";
@@ -44,11 +41,16 @@ const kattAbi = [
 // BigNumberToInt(x)
 
 async function connectWallet() {
-  window.signer = provider.getSigner();
+  window.ethereum.enable().then(function() {
+    provider = new ethers.providers.Web3Provider(window.ethereum);
+    window.signer = provider.getSigner();
+    kattContract = new ethers.Contract(kattAddress, kattAbi, provider);
+    getOverviewData();
+  });
 }
 
 async function joinLottery() {
-  return signer.joinLottery();
+  return kattContract.joinLottery();
 }
 
 function BigNumberToInt(x) {
@@ -76,6 +78,7 @@ function getOverviewData() {
     var _success = await joinLottery();
     var _message = _success ? "Join successfully" : "Something went wrong";
     $("#lottery-join-message").html(_message);
+    console.log(_success);
   });
 
 }
