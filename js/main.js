@@ -40,7 +40,7 @@ async function connectWallet() {
     provider = await new ethers.providers.Web3Provider(window.ethereum);
     signer = await provider.getSigner();
     kattContract = await new ethers.Contract(kattAddress, kattAbi, signer);
-    getNetworkStateChangedFunctions();
+    // getNetworkStateChangedFunctions();
   });
 }
 
@@ -61,6 +61,7 @@ function BigNumberToInt(x) {
 
 $(function() {
   getOverviewData();
+  getNetworkStateChangedFunctions();
 });
 
 function getOverviewData() {
