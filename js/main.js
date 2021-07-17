@@ -58,6 +58,9 @@ function BigNumberToInt(x) {
 }
 
 $(function() {
+  $("#btn-connect-wallet").click(async function() {
+    await connectWallet();
+  });
 });
 
 function getOverviewData() {
@@ -67,10 +70,6 @@ function getOverviewData() {
 
   $.when(kattContract.totalSupply()).then(function( data, textStatus, jqXHR ) {
     $("#data-max-supply").html(BigNumberToInt(data));
-  });
-
-  $("#btn-connect-wallet").click(async function() {
-    await connectWallet();
   });
 
   $("#btn-join-lottery").click(async function() {
