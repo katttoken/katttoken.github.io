@@ -38,8 +38,8 @@ let infuraKattContract = new ethers.Contract(kattAddress, kattAbi, infuraProvide
 async function connectWallet() {
   window.ethereum.enable().then(async function() {
     provider = await new ethers.providers.Web3Provider(window.ethereum);
-    signer = provider.getSigner();
-    kattContract = await new ethers.Contract(kattAddress, kattAbi, window.signer);
+    signer = await provider.getSigner();
+    kattContract = await new ethers.Contract(kattAddress, kattAbi, signer);
     getNetworkStateChangedFunctions();
   });
 }
