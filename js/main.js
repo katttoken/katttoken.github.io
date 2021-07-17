@@ -44,6 +44,10 @@ async function connectWallet() {
   const signer = provider.getSigner();
 }
 
+async function joinLottery() {
+  return kattContract.joinLottery();
+}
+
 function BigNumberToInt(x) {
   return ethers.utils.formatEther(x);
 }
@@ -60,4 +64,15 @@ function getOverviewData() {
   $.when(kattContract.totalSupply()).then(function( data, textStatus, jqXHR ) {
     $("#data-max-supply").html(BigNumberToInt(data));
   });
+
+  $("#btn-connect-wallet").click(async function() {
+    await connectWallet();
+  });
+
+  $("#btn-join-lottery").click(async function() {
+    var _success = await joinLottery();
+    var _message = _success ? "Join successfully" : "Something went wrong";
+    $("#lottery-join-message").html(_message);
+  });
+
 }
