@@ -508,7 +508,7 @@
       }
     </script>
     <!--Modal join lottery-->
-    <div x-show="showLotteryJoinModal" class="hidden z-40 fixed w-full h-full top-0 left-0 flex items-center justify-center">
+    <div x-show="showLotteryJoinModal" class="z-40 fixed w-full h-full top-0 left-0 flex items-center justify-center" style="display:none">
       <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
       <div @click.away="showLotteryJoinModal = false"
         x-show="showLotteryJoinModal"
@@ -541,7 +541,7 @@
       </div>
     </div>
     <!--Modal claim lottery-->
-    <div x-show="showLotteryClaimModal" class="hidden z-40 fixed w-full h-full top-0 left-0 flex items-center justify-center">
+    <div x-show="showLotteryClaimModal" class="z-40 fixed w-full h-full top-0 left-0 flex items-center justify-center" style="display:none">
       <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
       <div @click.away="showLotteryClaimModal = false"
         x-show="showLotteryClaimModal"
