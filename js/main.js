@@ -58,9 +58,6 @@ function BigNumberToInt(x) {
 }
 
 $(function() {
-  $("#btn-connect-wallet").click(async function() {
-    await connectWallet();
-  });
 });
 
 function getOverviewData() {
