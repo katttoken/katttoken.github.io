@@ -15,7 +15,8 @@ const kattAbi = [
   "function symbol() view returns (string)",
   "function balanceOf(address) view returns (uint)",
   "function transfer(address to, uint amount)",
-  "event Transfer(address indexed from, address indexed to, uint amount)"
+  "event Transfer(address indexed from, address indexed to, uint amount)",
+  "function getDayEmission() view returns (uint)"
 ];
 
 const kattContract = new ethers.Contract(kattAddress, kattAbi, provider);
