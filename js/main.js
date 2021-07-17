@@ -41,11 +41,11 @@ const kattContract = new ethers.Contract(kattAddress, kattAbi, provider);
 async function connectWallet() {
   let provider;
   window.ethereum.enable().then(provider = new ethers.providers.Web3Provider(window.ethereum));
-  const signer = provider.getSigner();
+  window.signer = provider.getSigner();
 }
 
 async function joinLottery() {
-  return kattContract.joinLottery();
+  return signer.joinLottery();
 }
 
 function BigNumberToInt(x) {
