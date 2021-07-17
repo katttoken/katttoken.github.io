@@ -21,7 +21,8 @@ const kattAbi = [
   "function placeBet(uint256 _betID, uint _option, uint256 _betAmount)",
   "function endBet(uint256 _betID, uint winOption)",
   "function withdrawBetWin(uint256 _betID) returns (uint value)",
-  "function getMemberBetWin(uint256 _betID, address _member) view returns (uint value)"
+  "function getMemberBetWin(uint256 _betID, address _member) view returns (uint value)",
+  "function currentEra() view returns (uint256)",
 ];
 
 // main provider
@@ -45,6 +46,11 @@ async function connectWallet() {
 
 async function joinLottery() {
   return kattContract.joinLottery();
+}
+
+async function claimLottery() {
+  var _currentEra = infuraKattContract.currentEra();
+  return kattContract.withdrawAllLotteryWins(_currentEra);
 }
 
 function BigNumberToInt(x) {
@@ -72,4 +78,46 @@ function getNetworkStateChangedFunctions() {
     $("#lottery-join-message").html(_message);
     console.log(_success);
   });
+  $("#btn-claim-lottery").click(async function() {
+    var _success = await claimLottery();
+    var _message = _success ? "Claim successfully" : "Something went wrong";
+    $("#lottery-claim-message").html(_message);
+    console.log(_success);
+  });
 }
+
+// Modals
+
+// var openmodaljoinlottery = document.querySelectorAll('.modal-join-lottery-open')
+// for (var i = 0; i < openmodaljoinlottery.length; i++) {
+//   openmodaljoinlottery[i].addEventListener('click', function(event){
+//   event.preventDefault()
+//   toggleModalJoinLottery()
+//   })
+// }
+// const overlay = document.querySelector('.modal-overlay')
+// overlay.addEventListener('click', toggleModalJoinLottery)
+
+// var closemodaljoinlottery = document.querySelectorAll('.modal-close')
+// for (var i = 0; i < closemodaljoinlottery.length; i++) {
+//   closemodaljoinlottery[i].addEventListener('click', toggleModalJoinLottery)
+// }      
+// document.onkeydown = function(evt) {
+//   evt = evt || window.event
+//   var isEscape = false
+//   if ("key" in evt) {
+//   isEscape = (evt.key === "Escape" || evt.key === "Esc")
+//   } else {
+//   isEscape = (evt.keyCode === 27)
+//   }
+//   if (isEscape && document.body.classList.contains('modal-active')) {
+//     toggleModalJoinLottery()
+//   }
+// }; 
+// function toggleModalJoinLottery() {
+//   const body = document.querySelector('body')
+//   const modal = document.querySelector('.modal-join-lottery')
+//   modal.classList.toggle('opacity-0')
+//   modal.classList.toggle('pointer-events-none')
+//   body.classList.toggle('modal-active')
+// }
