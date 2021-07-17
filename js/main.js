@@ -38,18 +38,20 @@ let infuraKattContract = new ethers.Contract(kattAddress, kattAbi, infuraProvide
 async function connectWallet() {
   window.ethereum.enable().then(async function() {
     provider = await new ethers.providers.Web3Provider(window.ethereum);
-    window.signer = provider.getSigner();
+    signer = provider.getSigner();
     kattContract = await new ethers.Contract(kattAddress, kattAbi, window.signer);
     getNetworkStateChangedFunctions();
   });
 }
 
 async function joinLottery() {
+  await connectWallet();
   return kattContract.joinLottery();
 }
 
 async function claimLottery() {
-  var _currentEra = infuraKattContract.currentEra();
+  await connectWallet();
+  var _currentEra = await infuraKattContract.currentEra();
   return kattContract.withdrawAllLotteryWins(_currentEra);
 }
 
