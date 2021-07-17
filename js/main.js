@@ -51,7 +51,7 @@ async function connectWallet() {
 async function isWalletConnected() {
   var _connected = true;
   try {
-    var _address = signer.getAddress();
+    await signer.getAddress();
   } catch (error) {
     _connected = false;
   }
@@ -65,6 +65,7 @@ async function joinLottery() {
 
 async function claimLottery() {
   await connectWallet();
+  var _currentEra = await infuraKattContract.currentEra();
   return await kattContract.withdrawAllLotteryWins(_currentEra);
 }
 
