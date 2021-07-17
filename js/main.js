@@ -53,12 +53,11 @@ $(function() {
 });
 
 function getOverviewData() {
-  $.getJSON("https://kattapi.tdao.me/getKattStatsFromEtherscan.php", function( data ) {
+  $.getJSON("https://tdao.me/kattapi/getKattStatsFromEtherscan.php", function( data ) {
     console.log(data);
   });
-  $("#data-max-supply")
 
-  $.when(kattContract.totalSupply).then(function( data, textStatus, jqXHR ) {
-    $("#data-max-supply").html(data);
+  $.when(kattContract.totalSupply()).then(function( data, textStatus, jqXHR ) {
+    $("#data-max-supply").html(BigNumberToInt(data));
   });
 }
