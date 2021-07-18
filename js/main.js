@@ -21,7 +21,8 @@ const kattAbi = [
   "function placeBet(uint256 _betID, uint _option, uint256 _betAmount)",
   "function endBet(uint256 _betID, uint winOption)",
   "function withdrawBetWin(uint256 _betID) returns (uint value)",
-  "function getMemberBetWin(uint256 _betID, address _member) view returns (uint value)"
+  "function getMemberBetWin(uint256 _betID, address _member) view returns (uint value)",
+  "function currentEra() view returns (uint256)",
 ];
 
 // main provider
@@ -35,16 +36,37 @@ let infuraProvider = new ethers.providers.InfuraProvider("ropsten", infuraProjec
 let infuraKattContract = new ethers.Contract(kattAddress, kattAbi, infuraProvider);
 
 async function connectWallet() {
-  window.ethereum.enable().then(async function() {
-    provider = await new ethers.providers.Web3Provider(window.ethereum);
-    window.signer = provider.getSigner();
-    kattContract = await new ethers.Contract(kattAddress, kattAbi, window.signer);
-    getNetworkStateChangedFunctions();
-  });
+  // window.ethereum.enable().then(async function() {
+  //   provider = await new ethers.providers.Web3Provider(window.ethereum);
+  //   signer = await provider.getSigner();
+  //   kattContract = await new ethers.Contract(kattAddress, kattAbi, signer);
+  //   // getNetworkStateChangedFunctions();
+  // });
+  await window.ethereum.enable();
+  provider = await new ethers.providers.Web3Provider(window.ethereum);
+  signer = await provider.getSigner();
+  kattContract = await new ethers.Contract(kattAddress, kattAbi, signer);
+}
+
+async function isWalletConnected() {
+  var _connected = true;
+  try {
+    await signer.getAddress();
+  } catch (error) {
+    _connected = false;
+  }
+  return _connected;
 }
 
 async function joinLottery() {
-  return kattContract.joinLottery();
+  await connectWallet();
+  return await kattContract.joinLottery();
+}
+
+async function claimLottery() {
+  await connectWallet();
+  var _currentEra = await infuraKattContract.currentEra();
+  return await kattContract.withdrawAllLotteryWins(_currentEra);
 }
 
 function BigNumberToInt(x) {
@@ -52,6 +74,7 @@ function BigNumberToInt(x) {
 }
 
 $(function() {
+  getNetworkStateChangedFunctions();
   getOverviewData();
 });
 
@@ -67,9 +90,23 @@ function getOverviewData() {
 
 function getNetworkStateChangedFunctions() {
   $("#btn-join-lottery").click(async function() {
-    var _success = await joinLottery();
-    var _message = _success ? "Join successfully" : "Something went wrong";
-    $("#lottery-join-message").html(_message);
-    console.log(_success);
+    $("#lottery-join-loading").css('display','inline');
+    joinLottery().then((_success) => {
+      $("#lottery-claim-message").html(_success);
+      $("#lottery-join-loading").hide();
+    }).catch((error) => {
+      $("#lottery-claim-message").html(error);
+      $("#lottery-join-loading").hide();
+    });
+  });
+  $("#btn-claim-lottery").click(async function() {
+    $("#lottery-claim-loading").css('display','inline');
+    claimLottery().then((_success) => {
+      $("#lottery-claim-message").html(_success);
+      $("#lottery-claim-loading").hide();
+    }).catch((error) => {
+      $("#lottery-claim-message").html(error);
+      $("#lottery-claim-loading").hide();
+    });
   });
 }
