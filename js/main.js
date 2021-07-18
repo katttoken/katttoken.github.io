@@ -1,4 +1,4 @@
-const kattAddress = "0xc481676320d18c7459fa979128d0139d58c5f3cd";
+const kattAddress = "0x03d473ce3b1a7eedb13178592ce56d0d7dc6edc4";
 // The ERC-20 Contract ABI, which is a common contract interface
 // for tokens (this is the Human-Readable ABI format)
 const kattAbi = [
