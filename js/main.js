@@ -99,6 +99,7 @@ $(function() {
 });
 
 function getOverviewData() {
+  $("#txt-contract-address").text(kattAddress);
   $.getJSON("https://tdao.me/kattapi/getKattStatsFromEtherscan.php", function( data ) {
     console.log(data);
   });
