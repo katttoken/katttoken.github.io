@@ -526,8 +526,8 @@
                   </svg>
                 </div>
               </div>
-              <div class="flex justify-between items-center pb-3">
-                <p class="text-pink-500 wallet-not-connected" x-show="!isWalletConnected" onclick="connectWallet()">Connect Wallet to get a free lottery ticket</p>
+              <div class="justify-between items-center pb-3" id="txt-join-lottery-stats">
+                <p class="text-pink-500 wallet-not-connected cursor-pointer" x-show="!isWalletConnected" onclick="connectWallet()">Connect Wallet to get a free lottery ticket [click to refresh]</p>
               </div>
               <div class="flex justify-center pt-2">
                 <button class="px-4 bg-transparent bg-indigo-500 p-3 rounded-full text-white hover:bg-indigo-400 hover:text-black mr-2 font-bold gradient" id="btn-join-lottery">
@@ -546,7 +546,7 @@
                 <p class="text-2xl font-bold">Claim lottery wins</p>
               </div>
               <div class="flex justify-between items-center pb-3">
-                <p class="text-pink-500 wallet-not-connected" x-show="!isWalletConnected" onclick="connectWallet()">Connect Wallet to see your lottery history</p>
+                <p class="text-pink-500 wallet-not-connected cursor-pointer" x-show="!isWalletConnected" onclick="connectWallet()">Connect Wallet to see your lottery history [click to refresh]</p>
               </div>
               <div class="flex justify-center pt-2">
                 <button class="px-4 bg-transparent bg-indigo-500 p-3 rounded-full text-white hover:bg-indigo-400 hover:text-black mr-2 font-bold gradient" id="btn-claim-lottery">
