@@ -512,7 +512,7 @@
       <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
       <div @click.away="showLotteryJoinModal = false"
         x-show="showLotteryJoinModal"
-        class="modal-container bg-white w-11/12 md:max-w-5xl mx-auto rounded-xl shadow-lg z-50 overflow-y-auto"
+        class="modal-container bg-white w-11/12 md:max-w-5xl mx-auto rounded-xl shadow-lg z-50 overflow-y-scroll max-h-full"
         x-transition:enter="transition ease duration-100 transform" x-transition:enter-start="opacity-0 scale-90 translate-y-1" x-transition:enter-end="opacity-100 scale-100 translate-y-0" x-transition:leave="transition ease duration-100 transform" x-transition:leave-start="opacity-100 scale-100 translate-y-0" x-transition:leave-end="opacity-0 scale-90 translate-y-1">
         <!-- begin: modal content-->
         <div class="modal-content py-4 text-left px-6 text-black">
