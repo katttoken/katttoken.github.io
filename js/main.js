@@ -26,7 +26,8 @@ const kattAbi = [
   "function currentDay() view returns (uint256)",
   "function nextDayTime() view returns (uint256)",
   "function nextEraTime() view returns (uint256)",
-  "function mapMemberEra_LotteryDays(address member, uint256 era, uint256 day) view returns (uint256)"
+  "function mapMemberEra_LotteryDays(address member, uint256 era, uint256 day) view returns (uint256)",
+  "function mapEraDayMember_LotteryShares(uint256 era, uint256 day, address member) view returns (uint256)"
 ];
 
 // main provider
