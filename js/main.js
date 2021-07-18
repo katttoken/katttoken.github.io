@@ -23,6 +23,9 @@ const kattAbi = [
   "function withdrawBetWin(uint256 _betID) returns (uint value)",
   "function getMemberBetWin(uint256 _betID, address _member) view returns (uint value)",
   "function currentEra() view returns (uint256)",
+  "function currentDay() view returns (uint256)",
+  "function nextDayTime() view returns (uint256)",
+  "function nextEraTime() view returns (uint256)"
 ];
 
 // main provider
@@ -34,6 +37,12 @@ let signer;
 let infuraProjectId = "86a437462c0b40b18dcc634cfb6b0a6a";
 let infuraProvider = new ethers.providers.InfuraProvider("ropsten", infuraProjectId);
 let infuraKattContract = new ethers.Contract(kattAddress, kattAbi, infuraProvider);
+
+// ui variables
+window.nextDayTime = 0;
+window.currentDay = 0;
+window.currentEra = 0;
+window.daysPerEra = 244;
 
 async function connectWallet() {
   // window.ethereum.enable().then(async function() {
@@ -69,7 +78,7 @@ async function claimLottery() {
   return await kattContract.withdrawAllLotteryWins(_currentEra);
 }
 
-function BigNumberToInt(x) {
+function BigNumberToKatt(x) {
   return ethers.utils.formatEther(x);
 }
 
@@ -83,8 +92,25 @@ function getOverviewData() {
     console.log(data);
   });
 
-  $.when(infuraKattContract.totalSupply()).then(function( data, textStatus, jqXHR ) {
-    $("#data-max-supply").html(BigNumberToInt(data));
+  // $.when(infuraKattContract.totalSupply()).then(function( data, textStatus, jqXHR ) {
+  //   $("#data-max-supply").html(BigNumberToKatt(data));
+  // });
+
+  $.when(infuraKattContract.nextDayTime()).then(function( data, textStatus, jqXHR ) {
+    window.nextDayTime = data.toNumber();
+  });
+
+  $.when(infuraKattContract.currentEra()).then(function( data, textStatus, jqXHR ) {
+    window.currentEra = data.toNumber();
+    $("#txt-current-era").text(window.currentEra);
+  });
+
+  $.when(infuraKattContract.currentDay()).then(function( data, textStatus, jqXHR ) {
+    window.currentDay = data.toNumber();
+    $("#txt-current-day").text(window.currentDay);
+    let eraProgress = window.currentDay/window.daysPerEra*100;
+    $("#txt-progress-bar").text(eraProgress.toLocaleString(window.document.documentElement.lang)+"%");
+    $("#txt-progress-bar").css("width",eraProgress+"%");
   });
 }
 
@@ -111,7 +137,7 @@ function getNetworkStateChangedFunctions() {
   });
 }
 
-function beer() {
+function remainingTimeData() {
   return {
       seconds: '00',
       minutes: '00',
@@ -119,25 +145,19 @@ function beer() {
       days: '00',
       distance: 0,
       countdown: null,
-      beerTime: new Date('May 17, 2021 00:00:00').getTime(),
-      now: new Date().getTime(),
-      start: function() {
+      now: Math.floor(new Date().getTime()/1000),
+      remainingTimeCountdown: function() {
           this.countdown = setInterval(() => {
               // Calculate time
-              this.now = new Date().getTime();
-              this.distance = this.beerTime - this.now;
+              this.now = Math.floor(new Date().getTime()/1000);
+              this.distance = window.nextDayTime - this.now;
               // Set Times
-              this.days = this.padNum( Math.floor(this.distance / (1000*60*60*24)) );
-              this.hours = this.padNum( Math.floor((this.distance % (1000*60*60*24)) / (1000*60*60)) );
-              this.minutes = this.padNum( Math.floor((this.distance % (1000*60*60)) / (1000*60)) );
-              this.seconds = this.padNum( Math.floor((this.distance % (1000*60)) / 1000) );
-              // Stop
-              if (this.distance < 0) {
-                  clearInterval(this.countdown);
-                  this.days = '00';
-                  this.hours = '00';
-                  this.minutes = '00';
-                  this.seconds = '00';
+              if (this.distance > 0)
+              {
+                //this.days = this.padNum( Math.floor(this.distance / (60*60*24)) );
+                this.hours = this.padNum( Math.floor((this.distance % (60*60*24)) / (60*60)) );
+                this.minutes = this.padNum( Math.floor((this.distance % (60*60)) / (60)) );
+                this.seconds = this.padNum( Math.floor((this.distance % (60))) );
               }
           },100);
       },
