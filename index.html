@@ -18,15 +18,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&family=Kanit:wght@400;600&display=swap" rel="stylesheet">
-    <!-- Define your gradient here - use online tools to find a gradient matching your branding-->
-    <style>
-      .gradient {
-        background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
-      }
-    </style>
   </head>
   <body class="leading-normal tracking-normal text-white gradient" style="font-family: 'Kanit', sans-serif;"
-    x-data="{ showLotteryJoinModal : false,  showLotteryClaimModal : false, showHowtoModal : false}">
+    x-data="{ showLotteryJoinModal : false,  showHowtoModal : false}">
     <!--Nav-->
     <nav id="header" class="fixed w-full z-30 top-0 text-white">
       <div class="w-full mx-auto flex flex-wrap items-center justify-between mt-0 py-2">
@@ -54,13 +48,6 @@
             </li>
             <li class="mr-3">
               <a class="inline-block py-2 px-4 text-black font-bold no-underline" href="#">How to acquire</a>
-            </li>
-            <li class="mr-3">
-              <a class="inline-block py-2 px-4 text-black font-bold no-underline"
-                href="javascript:void(0)"
-                @click="showLotteryClaimModal = !showLotteryClaimModal">
-                Claim lottery wins
-              </a>
             </li>
             <li class="mr-3">
               <a class="inline-block py-2 px-4 text-black font-bold no-underline" href="#" onclick="connectWallet()">Connect Wallet</a>
@@ -527,8 +514,7 @@
         x-show="showLotteryJoinModal"
         class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded-xl shadow-lg z-50 overflow-y-auto"
         x-transition:enter="transition ease duration-100 transform" x-transition:enter-start="opacity-0 scale-90 translate-y-1" x-transition:enter-end="opacity-100 scale-100 translate-y-0" x-transition:leave="transition ease duration-100 transform" x-transition:leave-start="opacity-100 scale-100 translate-y-0" x-transition:leave-end="opacity-0 scale-90 translate-y-1">
-
-        <!-- Add margin if you want to see some of the overlay behind the modal-->
+        <!-- begin: modal content-->
         <div class="modal-content py-4 text-left px-6 text-black">
           <div class="flex justify-between items-center pb-3">
             <p class="text-2xl font-bold">Join Lottery!</p>
@@ -550,29 +536,9 @@
           <div class="flex justify-center">
             <p class="text-pink-500" id="lottery-join-message"></p>
           </div>
-        </div>
-      </div>
-    </div>
-    <!--Modal claim lottery-->
-    <div x-show="showLotteryClaimModal" class="z-40 fixed w-full h-full top-0 left-0 flex items-center justify-center" style="display:none">
-      <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
-      <div @click.away="showLotteryClaimModal = false"
-        x-show="showLotteryClaimModal"
-        class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded-xl shadow-lg z-50 overflow-y-auto"
-        x-transition:enter="transition ease duration-100 transform" x-transition:enter-start="opacity-0 scale-90 translate-y-1" x-transition:enter-end="opacity-100 scale-100 translate-y-0" x-transition:leave="transition ease duration-100 transform" x-transition:leave-start="opacity-100 scale-100 translate-y-0" x-transition:leave-end="opacity-0 scale-90 translate-y-1">
-
-        <!-- Add margin if you want to see some of the overlay behind the modal-->
-        <div class="modal-content py-4 text-left px-6 text-black">
-          <div class="flex justify-between items-center pb-3">
+          <hr class="mt-4"/>
+          <div class="flex justify-between items-center pb-3 mt-3">
             <p class="text-2xl font-bold">Claim lottery wins</p>
-            <div @click="showLotteryClaimModal = false" class="cursor-pointer z-50">
-              <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
-                <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
-              </svg>
-            </div>
-          </div>
-          <div class="flex justify-left pb-3">
-            Connect wallet to see all lottery wins
           </div>
           <div class="flex justify-center pt-2">
             <button class="px-4 bg-transparent bg-indigo-500 p-3 rounded-full text-white hover:bg-indigo-400 hover:text-black mr-2 font-bold gradient" id="btn-claim-lottery">
@@ -583,10 +549,8 @@
               Claim all lottery wins
             </button>
           </div>
-          <div class="flex justify-center pt-2">
-            <p class="text-pink-500" id="lottery-claim-message"></p>
-          </div>
         </div>
+        <!-- end: modal content-->
       </div>
     </div>
     <script src="js/ethers-5.2.umd.min.js" type="application/javascript"></script>
