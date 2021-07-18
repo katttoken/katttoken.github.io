@@ -493,42 +493,118 @@
       <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
       <div @click.away="showLotteryJoinModal = false"
         x-show="showLotteryJoinModal"
-        class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded-xl shadow-lg z-50 overflow-y-auto"
+        class="modal-container bg-white w-11/12 md:max-w-5xl mx-auto rounded-xl shadow-lg z-50 overflow-y-auto"
         x-transition:enter="transition ease duration-100 transform" x-transition:enter-start="opacity-0 scale-90 translate-y-1" x-transition:enter-end="opacity-100 scale-100 translate-y-0" x-transition:leave="transition ease duration-100 transform" x-transition:leave-start="opacity-100 scale-100 translate-y-0" x-transition:leave-end="opacity-0 scale-90 translate-y-1">
         <!-- begin: modal content-->
         <div class="modal-content py-4 text-left px-6 text-black">
-          <div class="flex justify-between items-center pb-3">
-            <p class="text-2xl font-bold">Join Lottery!</p>
-            <div @click="showLotteryJoinModal = false" class="cursor-pointer z-50">
-              <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
-                <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
-              </svg>
+          <div class="flex flex-wrap">
+            <div class="w-full md:w-1/2 pr-4">
+              <div class="flex justify-between items-center pb-3">
+                <p class="text-2xl font-bold">Join Lottery!</p>
+                <div @click="showLotteryJoinModal = false" class="cursor-pointer z-50 visible md:invisible">
+                  <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+                    <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
+                  </svg>
+                </div>
+              </div>
+              <div class="flex justify-between items-center pb-3">
+                <p class="text-pink-500 wallet-not-connected">Connect Wallet to get a free lottery ticket</p>
+              </div>
+              <div class="flex justify-center pt-2">
+                <button class="px-4 bg-transparent bg-indigo-500 p-3 rounded-full text-white hover:bg-indigo-400 hover:text-black mr-2 font-bold gradient" id="btn-join-lottery">
+                  <svg id="lottery-join-loading" class="hidden inline animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Draw a free lottery
+                </button>
+              </div>
+              <div class="flex justify-center">
+                <p class="text-pink-500" id="lottery-join-message"></p>
+              </div>
+              <hr class="mt-4"/>
+              <div class="flex justify-between items-center pb-3 mt-3">
+                <p class="text-2xl font-bold">Claim lottery wins</p>
+              </div>
+              <div class="flex justify-between items-center pb-3">
+                <p class="text-pink-500 wallet-not-connected">Connect Wallet to see lottery history</p>
+              </div>
+              <div class="flex justify-center pt-2">
+                <button class="px-4 bg-transparent bg-indigo-500 p-3 rounded-full text-white hover:bg-indigo-400 hover:text-black mr-2 font-bold gradient" id="btn-claim-lottery">
+                  <svg id="lottery-claim-loading" class="hidden inline animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Claim all lottery wins
+                </button>
+              </div>
             </div>
-          </div>
-          <div class="flex justify-center pt-2">
-            <button class="px-4 bg-transparent bg-indigo-500 p-3 rounded-full text-white hover:bg-indigo-400 hover:text-black mr-2 font-bold gradient" id="btn-join-lottery">
-              <svg id="lottery-join-loading" class="hidden inline animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-              </svg>
-              Draw a free lottery
-            </button>
-          </div>
-          <div class="flex justify-center">
-            <p class="text-pink-500" id="lottery-join-message"></p>
-          </div>
-          <hr class="mt-4"/>
-          <div class="flex justify-between items-center pb-3 mt-3">
-            <p class="text-2xl font-bold">Claim lottery wins</p>
-          </div>
-          <div class="flex justify-center pt-2">
-            <button class="px-4 bg-transparent bg-indigo-500 p-3 rounded-full text-white hover:bg-indigo-400 hover:text-black mr-2 font-bold gradient" id="btn-claim-lottery">
-              <svg id="lottery-claim-loading" class="hidden inline animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-              </svg>
-              Claim all lottery wins
-            </button>
+            <div class="w-full md:w-1/2 md:border-l md:pl-4">
+              <hr class="my-4 block md:hidden"/>
+              <div class="flex justify-between items-center pb-3">
+                <p class="text-2xl font-bold">How to play</p>
+                <div @click="showLotteryJoinModal = false" class="cursor-pointer z-50 invisible md:visible">
+                  <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+                    <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
+                  </svg>
+                </div>
+              </div>
+              <div class="flex justify-between items-center pb-3">
+                <p>Everyday you join the free lottery, you are guaranteed to get a random portion of the fixed daily prize pool (current emission). It is that simple!</p>
+              </div>
+              <div class="flex justify-between items-center pb-3">
+                <div>
+                  <h1 class="mb-4 text-center font-black text-gray-700">STEPS</h1>
+                  <div class="flex">
+                    <div class="w-1/3 text-center px-2">
+                      <div class="bg-gray-300 rounded-lg flex items-center justify-center border border-gray-200">
+                        <div class="w-1/3 bg-transparent h-20 flex items-center justify-center icon-step p-1">
+                          <img src="images/tickets.svg" />
+                        </div>
+                        <div class="w-2/3 bg-gray-200 h-24 flex flex-col items-center justify-center px-1 rounded-r-lg body-step">
+                          <h2 class="font-bold text-sm">Draw</h2>
+                          <p class="text-xs text-gray-600">
+                            a free ticket
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="flex-1 flex items-center justify-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M14 2h-7.229l7.014 7h-13.785v6h13.785l-7.014 7h7.229l10-10z"/></svg>
+                    </div>
+                    <div class="w-1/3 text-center px-2">
+                      <div class="bg-gray-300 rounded-lg flex items-center justify-center border border-gray-200">
+                        <div class="w-1/3 bg-transparent h-20 flex items-center justify-center icon-step p-1">
+                          <img src="images/coffee-time.svg" />
+                        </div>
+                        <div class="w-2/3 bg-gray-200 h-24 flex flex-col items-center justify-center px-1 rounded-r-lg body-step">
+                          <h2 class="font-bold text-sm">Wait</h2>
+                          <p class="text-xs text-gray-600">
+                            for day end
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="flex-1 flex items-center justify-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M14 2h-7.229l7.014 7h-13.785v6h13.785l-7.014 7h7.229l10-10z"/></svg>
+                    </div>
+                    <div class="w-1/3 text-center px-2">
+                      <div class="bg-gray-300 rounded-lg flex items-center justify-center border border-gray-200">
+                        <div class="w-1/3 bg-transparent h-20 flex items-center justify-center icon-step p-1">
+                          <img src="images/cup.svg" />
+                        </div>
+                        <div class="w-2/3 bg-gray-200 h-24 flex flex-col items-center justify-center px-1 rounded-r-lg body-step">
+                          <h2 class="font-bold text-sm">Get KATT</h2>
+                          <p class="text-xs text-gray-600">
+                            Woohoo!
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <!-- end: modal content-->
