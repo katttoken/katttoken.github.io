@@ -20,7 +20,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Akaya+Kanadaka&family=Kanit:wght@400;600&display=swap" rel="stylesheet">
   </head>
   <body class="leading-normal tracking-normal text-white gradient" style="font-family: 'Kanit', sans-serif;"
-    x-data="{ showLotteryJoinModal : false,  showHowtoModal : false}">
+    x-data="{ showLotteryJoinModal : false,  showHowtoModal : false, isWalletConnected: false}">
     <!--Nav-->
     <nav id="header" class="fixed w-full z-30 top-0 text-white">
       <div class="w-full mx-auto flex flex-wrap items-center justify-between mt-0 py-2">
@@ -508,7 +508,7 @@
       }
     </script>
     <!--Modal join lottery-->
-    <div x-show="showLotteryJoinModal" class="z-40 fixed w-full h-full top-0 left-0 flex items-center justify-center" style="display:none">
+    <div x-show="showLotteryJoinModal" id="lottery-modal" class="z-40 fixed w-full h-full top-0 left-0 flex items-center justify-center" style="display:none">
       <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
       <div @click.away="showLotteryJoinModal = false"
         x-show="showLotteryJoinModal"
@@ -527,7 +527,7 @@
                 </div>
               </div>
               <div class="flex justify-between items-center pb-3">
-                <p class="text-pink-500 wallet-not-connected">Connect Wallet to get a free lottery ticket</p>
+                <p class="text-pink-500 wallet-not-connected" x-show="!isWalletConnected" onclick="connectWallet()">Connect Wallet to get a free lottery ticket</p>
               </div>
               <div class="flex justify-center pt-2">
                 <button class="px-4 bg-transparent bg-indigo-500 p-3 rounded-full text-white hover:bg-indigo-400 hover:text-black mr-2 font-bold gradient" id="btn-join-lottery">
@@ -546,7 +546,7 @@
                 <p class="text-2xl font-bold">Claim lottery wins</p>
               </div>
               <div class="flex justify-between items-center pb-3">
-                <p class="text-pink-500 wallet-not-connected">Connect Wallet to see your lottery history</p>
+                <p class="text-pink-500 wallet-not-connected" x-show="!isWalletConnected" onclick="connectWallet()">Connect Wallet to see your lottery history</p>
               </div>
               <div class="flex justify-center pt-2">
                 <button class="px-4 bg-transparent bg-indigo-500 p-3 rounded-full text-white hover:bg-indigo-400 hover:text-black mr-2 font-bold gradient" id="btn-claim-lottery">

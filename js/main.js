@@ -55,6 +55,7 @@ async function connectWallet() {
   provider = await new ethers.providers.Web3Provider(window.ethereum);
   signer = await provider.getSigner();
   kattContract = await new ethers.Contract(kattAddress, kattAbi, signer);
+  $('body').__x.$data.isWalletConnected = true;
 }
 
 async function isWalletConnected() {
