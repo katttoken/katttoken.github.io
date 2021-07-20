@@ -30,7 +30,8 @@ window.kattAbi = [
   "function mapEraDayMember_LotteryShares(uint256 era, uint256 day, address member) view returns (uint256)",
   "function mapEraDay_LotteryTotalShares(uint256 era, uint256 day) view returns (uint256)",
   "function mapEraDay_LotteryMemberCount(uint256 era, uint256 day) view returns (uint256)",
-  "function mapEraDay_LotteryMembers(uint256 era, uint256 day, uint256 index) view returns (address)"
+  "function mapEraDay_LotteryMembers(uint256 era, uint256 day, uint256 index) view returns (address)",
+  "function getMemberDaysLotteryJoined(address member, uint era) view returns(uint[], uint[])"
 ];
 
 // infura provider
@@ -46,12 +47,6 @@ window.daysPerEra = 244;
 window.myDayLotteryShare = 0;
 
 async function connectWallet() {
-  // window.ethereum.enable().then(async function() {
-  //   provider = await new ethers.providers.Web3Provider(window.ethereum);
-  //   signer = await provider.getSigner();
-  //   kattContract = await new ethers.Contract(window.kattAddress, kattAbi, signer);
-  //   // getNetworkStateChangedFunctions();
-  // });
   await window.ethereum.enable();
   window.provider = await new ethers.providers.Web3Provider(window.ethereum);
   window.signer = await window.provider.getSigner();
@@ -71,6 +66,9 @@ async function updateInfoAfterWalletConnected() {
       $("#txt-lottery-joined").show();
     else
       $("#btn-join-lottery").show();
+  });
+  $.when(infuraKattContract.getMemberDaysLotteryJoined(window.signer.getAddress(),window.currentEra)).then(function( data, textStatus, jqXHR ) {
+    console.log(data);
   });
 }
 
