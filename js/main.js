@@ -77,9 +77,10 @@ async function updateInfoAfterWalletConnected() {
       _trElem.append("<td class='pl-5 pr-3 whitespace-no-wrap'><div class='text-gray-400'>Day " + _days[i].toNumber() + "</div></td>");
       _trElem.append("<td class='px-2 py-2 whitespace-no-wrap'><div class='leading-5 text-gray-900'>" + _shares[i].toNumber() + " shares unclaimed</div></td>");
       $("#table-member-lottery-history > table > tbody").prepend(_trElem);
-      _shareSum += _shares[i].toNumber();
+      if (_days[i] != window.currentDay)
+        _shareSum += _shares[i].toNumber();
     }
-    if (_shareSum > 0)
+    if (_shareSum > 0 || Math.floor(new Date().getTime()/1000) > window.nextDayTime)
       $("#btn-claim-lottery").show();
   });
 }
@@ -137,6 +138,7 @@ function getOverviewData() {
     $("#txt-current-era").text(window.currentEra);
     $.when(infuraKattContract.currentDay()).then(function( data, textStatus, jqXHR ) {
       window.currentDay = data.toNumber();
+
       getNetworkStateChangedFunctions(); // make sure that window.currentEra and window.currentDay are available
 
       $("#txt-current-day").text(window.currentDay);
