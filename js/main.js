@@ -65,6 +65,7 @@ async function connectWallet() {
   $('body')[0].__x.$data.isWalletConnected = true;
   // updates after connecting wallet
   await updateInfoAfterWalletConnected();
+  return;
 }
 
 async function updateInfoAfterWalletConnected() {
@@ -72,10 +73,9 @@ async function updateInfoAfterWalletConnected() {
     window.myDayLotteryShare = data.toNumber();
     $("#txt-lottery-my-points").text(window.myDayLotteryShare);
     if (window.myDayLotteryShare > 0)
-    {
       $("#txt-lottery-joined").show();
-      $("#btn-join-lottery").hide();
-    }
+    else
+      $("#btn-join-lottery").show();
   });
 }
 
@@ -91,7 +91,6 @@ async function isWalletConnected() {
 
 async function joinLottery() {
   await connectWallet();
-  console.log(window.myDayLotteryShare);
   if (window.myDayLotteryShare == 0)
     await kattContract.joinLottery();
   return;
