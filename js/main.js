@@ -85,9 +85,8 @@ async function joinLottery() {
 
 async function claimLottery() {
   await connectWallet();
-  //var _currentEra = await infuraKattContract.currentEra();
-  //return await kattContract.withdrawAllLotteryWins(_currentEra);
-  return await kattContract.withdrawLotteryWin(1,1);
+  return await kattContract.withdrawAllLotteryWins(window.currentEra);
+  //return await kattContract.withdrawLottery(1,1);
 }
 
 function BigNumberToKatt(x) {
