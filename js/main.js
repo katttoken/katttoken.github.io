@@ -48,6 +48,7 @@ window.nextDayTime = 0;
 window.currentDay = 0;
 window.currentEra = 0;
 window.daysPerEra = 244;
+window.myDayLotteryShare = 0;
 
 async function connectWallet() {
   // window.ethereum.enable().then(async function() {
@@ -61,10 +62,20 @@ async function connectWallet() {
   signer = await provider.getSigner();
   kattContract = await new ethers.Contract(kattAddress, kattAbi, signer);
 
-  // updates after connecting wallet 
   $('body')[0].__x.$data.isWalletConnected = true;
+  // updates after connecting wallet
+  await updateInfoAfterWalletConnected();
+}
+
+async function updateInfoAfterWalletConnected() {
   $.when(infuraKattContract.mapEraDayMember_LotteryShares(window.currentEra,window.currentDay,signer.getAddress())).then(function( data, textStatus, jqXHR ) {
-    $("#txt-join-lottery-stats").append("<p>My point today: " + data.toNumber()  + "</p>");
+    window.myDayLotteryShare = data.toNumber();
+    $("#txt-lottery-my-points").text(window.myDayLotteryShare);
+    if (window.myDayLotteryShare > 0)
+    {
+      $("#txt-lottery-joined").show();
+      $("#btn-join-lottery").hide();
+    }
   });
 }
 
@@ -80,12 +91,17 @@ async function isWalletConnected() {
 
 async function joinLottery() {
   await connectWallet();
-  return await kattContract.joinLottery();
+  if (myDayLotteryShare == 0)
+    await kattContract.joinLottery();
+  return;
 }
 
 async function claimLottery() {
   await connectWallet();
-  return await kattContract.withdrawAllLotteryWins(window.currentEra);
+  if (window.currentEra == 0)
+    alert("Infura service is not working properly. Try reload the page before proceeding.");
+  else
+    return await kattContract.withdrawAllLotteryWins(window.currentEra);
   //return await kattContract.withdrawLottery(1,1);
 }
 
@@ -123,10 +139,10 @@ function getOverviewData() {
       $("#txt-progress-bar").text(eraProgress.toLocaleString(window.document.documentElement.lang)+"%");
       $("#txt-progress-bar").css("width",eraProgress+"%");
       $.when(infuraKattContract.mapEraDay_LotteryMemberCount(window.currentEra,window.currentDay)).then(function( data, textStatus, jqXHR ) {
-        $("#txt-join-lottery-stats").append("<p>Today participants: " + data.toNumber()  + "</p>");
+        $("#txt-lottery-total-participants").text(data.toNumber());
       });
       $.when(infuraKattContract.mapEraDay_LotteryTotalShares(window.currentEra,window.currentDay)).then(function( data, textStatus, jqXHR ) {
-        $("#txt-join-lottery-stats").append("<p>Total points today: " + data.toNumber()  + "</p>");
+        $("#txt-lottery-total-points").text(data.toNumber());
       });
     });
   });
