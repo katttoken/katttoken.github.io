@@ -1,7 +1,7 @@
-const kattAddress = "0x02977aabdc8fd2a8cdbeb8ec4c26d356d5a5e4ff";
+window.kattAddress = "0x02977aabdc8fd2a8cdbeb8ec4c26d356d5a5e4ff";
 // The ERC-20 Contract ABI, which is a common contract interface
 // for tokens (this is the Human-Readable ABI format)
-const kattAbi = [
+window.kattAbi = [
   "function totalSupply() view returns (uint256)",
   "function name() view returns (string)",
   "function symbol() view returns (string)",
@@ -33,15 +33,10 @@ const kattAbi = [
   "function mapEraDay_LotteryMembers(uint256 era, uint256 day, uint256 index) view returns (address)"
 ];
 
-// main provider
-let provider;
-let kattContract;
-let signer;
-
 // infura provider
 let infuraProjectId = "86a437462c0b40b18dcc634cfb6b0a6a";
 let infuraProvider = new ethers.providers.InfuraProvider("ropsten", infuraProjectId);
-let infuraKattContract = new ethers.Contract(kattAddress, kattAbi, infuraProvider);
+let infuraKattContract = new ethers.Contract(window.kattAddress, window.kattAbi, infuraProvider);
 
 // ui variables
 window.nextDayTime = 0;
@@ -54,13 +49,13 @@ async function connectWallet() {
   // window.ethereum.enable().then(async function() {
   //   provider = await new ethers.providers.Web3Provider(window.ethereum);
   //   signer = await provider.getSigner();
-  //   kattContract = await new ethers.Contract(kattAddress, kattAbi, signer);
+  //   kattContract = await new ethers.Contract(window.kattAddress, kattAbi, signer);
   //   // getNetworkStateChangedFunctions();
   // });
   await window.ethereum.enable();
-  provider = await new ethers.providers.Web3Provider(window.ethereum);
-  signer = await provider.getSigner();
-  kattContract = await new ethers.Contract(kattAddress, kattAbi, signer);
+  window.provider = await new ethers.providers.Web3Provider(window.ethereum);
+  window.signer = await window.provider.getSigner();
+  window.kattContract = await new ethers.Contract(window.kattAddress, window.kattAbi, window.signer);
 
   $('body')[0].__x.$data.isWalletConnected = true;
   // updates after connecting wallet
@@ -69,7 +64,7 @@ async function connectWallet() {
 }
 
 async function updateInfoAfterWalletConnected() {
-  $.when(infuraKattContract.mapEraDayMember_LotteryShares(window.currentEra,window.currentDay,signer.getAddress())).then(function( data, textStatus, jqXHR ) {
+  $.when(infuraKattContract.mapEraDayMember_LotteryShares(window.currentEra,window.currentDay,window.signer.getAddress())).then(function( data, textStatus, jqXHR ) {
     window.myDayLotteryShare = data.toNumber();
     $("#txt-lottery-my-points").text(window.myDayLotteryShare);
     if (window.myDayLotteryShare > 0)
@@ -82,7 +77,7 @@ async function updateInfoAfterWalletConnected() {
 async function isWalletConnected() {
   var _connected = true;
   try {
-    await signer.getAddress();
+    await window.signer.getAddress();
   } catch (error) {
     _connected = false;
   }
@@ -92,7 +87,7 @@ async function isWalletConnected() {
 async function joinLottery() {
   await connectWallet();
   if (window.myDayLotteryShare == 0)
-    await kattContract.joinLottery();
+    await window.kattContract.joinLottery();
   return;
 }
 
@@ -101,7 +96,7 @@ async function claimLottery() {
   if (window.currentEra == 0)
     alert("Infura service is not working properly. Try reload the page before proceeding.");
   else
-    return await kattContract.withdrawAllLotteryWins(window.currentEra);
+    return await window.kattContract.withdrawAllLotteryWins(window.currentEra);
   //return await kattContract.withdrawLottery(1,1);
 }
 
@@ -114,7 +109,7 @@ $(function() {
 });
 
 function getOverviewData() {
-  $("#txt-contract-address").text(kattAddress);
+  $("#txt-contract-address").text(window.kattAddress);
   $.getJSON("https://tdao.me/kattapi/getKattStatsFromEtherscan.php", function( data ) {
     console.log(data);
   });
