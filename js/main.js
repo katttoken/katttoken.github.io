@@ -68,7 +68,19 @@ async function updateInfoAfterWalletConnected() {
       $("#btn-join-lottery").show();
   });
   $.when(infuraKattContract.getMemberDaysLotteryJoined(window.signer.getAddress(),window.currentEra)).then(function( data, textStatus, jqXHR ) {
-    console.log(data);
+    var _days = data[0];
+    var _shares = data[1];
+    var _shareSum = 0;
+    $("#table-member-lottery-history > table > tbody").html("");
+    for (var i = 0; i < _days.length; i++) {
+      var _trElem = $("<tr class='relative transform scale-100 text-xs py-1 border-b-2 border-gray-100 cursor-default'></tr>");
+      _trElem.append("<td class='pl-5 pr-3 whitespace-no-wrap'><div class='text-gray-400'>Day " + _days[i] + "</div></td>");
+      _trElem.append("<td class='px-2 py-2 whitespace-no-wrap'><div class='leading-5 text-gray-900'>" + _shares[i] + " shares unclaimed</div></td>");
+      $("#table-member-lottery-history > table > tbody").append(_trElem);
+      _shareSum += _shares[i].toNumber();
+    }
+    if (_shareSum > 0)
+      $("#btn-claim-lottery").show();
   });
 }
 
