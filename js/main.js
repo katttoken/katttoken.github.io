@@ -91,7 +91,7 @@ async function isWalletConnected() {
 
 async function joinLottery() {
   await connectWallet();
-  if (myDayLotteryShare == 0)
+  if (window.myDayLotteryShare == 0)
     await kattContract.joinLottery();
   return;
 }
