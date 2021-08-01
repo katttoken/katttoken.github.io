@@ -115,6 +115,7 @@ async function claimLottery() {
 }
 
 async function getBets() {
+  await connectWallet();
   var betCount = await window.kattContract.betCount();
   window.bets = await window.kattContract.bets_();
   return;
