@@ -16,6 +16,7 @@ window.kattAbi = [
   "function withdrawLottery(uint era, uint day) returns (uint value)",
   "function getMemberLotteryWin(uint era, uint day, address member) view returns (uint value)",
   "function getNextEraEmission() public view returns (uint)",
+  "function betCount() view returns (uint)",
   "function getDayEmission() view returns (uint)",
   "function createBet(string calldata _description, bytes32[] calldata _options, uint256 _betDurationInHours) returns (uint256)",
   "function placeBet(uint256 _betID, uint _option, uint256 _betAmount)",
