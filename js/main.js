@@ -47,7 +47,7 @@ window.currentDay = 0;
 window.currentEra = 0;
 window.daysPerEra = 244;
 window.myDayLotteryShare = 0;
-window.bets = array();
+window.bets = [];
 
 async function connectWallet() {
   await window.ethereum.enable();
