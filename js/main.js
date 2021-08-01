@@ -17,6 +17,7 @@ window.kattAbi = [
   "function getMemberLotteryWin(uint era, uint day, address member) view returns (uint value)",
   "function getNextEraEmission() public view returns (uint)",
   "function betCount() view returns (uint)",
+  "function bets_(uint256 index) view returns (uint256[])",
   "function getDayEmission() view returns (uint)",
   "function createBet(string calldata _description, bytes32[] calldata _options, uint256 _betDurationInHours) returns (uint256)",
   "function placeBet(uint256 _betID, uint _option, uint256 _betAmount)",
@@ -46,6 +47,7 @@ window.currentDay = 0;
 window.currentEra = 0;
 window.daysPerEra = 244;
 window.myDayLotteryShare = 0;
+window.bets = array();
 
 async function connectWallet() {
   await window.ethereum.enable();
@@ -110,6 +112,12 @@ async function claimLottery() {
   else
     return await window.kattContract.withdrawAllLotteryWins(window.currentEra);
   //return await kattContract.withdrawLottery(1,1);
+}
+
+async function getBets() {
+  var betCount = await window.kattContract.betCount();
+  window.bets = await window.kattContract.bets_();
+  return;
 }
 
 function BigNumberToKatt(x) {
