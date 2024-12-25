@@ -50,8 +50,8 @@ window.myDayLotteryShare = 0;
 window.bets = [];
 
 async function connectWallet() {
-  await window.ethereum.enable();
-  window.provider = await new ethers.providers.Web3Provider(window.ethereum);
+  await window.ethereum.request({ method: 'eth_requestAccounts' });
+  window.provider = new ethers.BrowserProvider(window.ethereum);
   window.signer = await window.provider.getSigner();
   window.kattContract = await new ethers.Contract(window.kattAddress, window.kattAbi, window.signer);
 
