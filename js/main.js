@@ -131,9 +131,9 @@ $(function() {
 
 function getOverviewData() {
   $("#txt-contract-address").text(window.kattAddress);
-  $.getJSON("https://tdao.me/kattapi/getKattStatsFromEtherscan.php", function( data ) {
-    console.log(data);
-  });
+  // $.getJSON("https://tdao.me/kattapi/getKattStatsFromEtherscan.php", function( data ) {
+  //   console.log(data);
+  // });
 
   // $.when(infuraKattContract.totalSupply()).then(function( data, textStatus, jqXHR ) {
   //   $("#data-max-supply").html(BigNumberToKatt(data));
