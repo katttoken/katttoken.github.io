@@ -38,7 +38,7 @@ window.kattAbi = [
 
 // infura provider
 let infuraProjectId = "86a437462c0b40b18dcc634cfb6b0a6a";
-let infuraProvider = new ethers.providers.InfuraProvider("holesky", infuraProjectId);
+let infuraProvider = new ethers.InfuraProvider("holesky", infuraProjectId);
 let infuraKattContract = new ethers.Contract(window.kattAddress, window.kattAbi, infuraProvider);
 
 // ui variables
