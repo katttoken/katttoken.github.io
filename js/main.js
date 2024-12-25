@@ -132,8 +132,6 @@ $(function() {
 function getOverviewData() {
   $("#txt-contract-address").text(window.kattAddress);
 
-  let symbol = infuraKattContract.symbol();
-  console.log(symbol);
   // $.getJSON("https://tdao.me/kattapi/getKattStatsFromEtherscan.php", function( data ) {
   //   console.log(data);
   // });
