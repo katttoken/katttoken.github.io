@@ -36,8 +36,6 @@ window.kattAbi = [
   "function getMemberDaysLotteryJoined(address member, uint era) view returns(uint[], uint[])"
 ];
 
-import { ethers } from 'ethers';
-
 // infura provider
 let infuraProjectId = "86a437462c0b40b18dcc634cfb6b0a6a";
 let infuraProvider = new ethers.InfuraProvider("sepolia", infuraProjectId);
