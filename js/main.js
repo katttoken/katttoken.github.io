@@ -1,4 +1,4 @@
-window.kattAddress = "0x02977aabdc8fd2a8cdbeb8ec4c26d356d5a5e4ff";
+window.kattAddress = "0xd15abd0cb3961a77f5738d5721b06d653cafe9c6";
 // The ERC-20 Contract ABI, which is a common contract interface
 // for tokens (this is the Human-Readable ABI format)
 window.kattAbi = [
