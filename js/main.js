@@ -63,7 +63,7 @@ async function connectWallet() {
 
 async function updateInfoAfterWalletConnected() {
   $.when(infuraKattContract.mapEraDayMember_LotteryShares(window.currentEra,window.currentDay,window.signer.getAddress())).then(function( data, textStatus, jqXHR ) {
-    window.myDayLotteryShare = data.toNumber();
+    window.myDayLotteryShare = Number(data);
     $("#txt-lottery-my-points").text(window.myDayLotteryShare);
     if (window.myDayLotteryShare > 0)
       $("#txt-lottery-joined").show();
@@ -77,11 +77,11 @@ async function updateInfoAfterWalletConnected() {
     $("#table-member-lottery-history > table > tbody").html("");
     for (var i = 0; i < _days.length; i++) {
       var _trElem = $("<tr class='relative transform scale-100 text-xs py-1 border-b-2 border-gray-100 cursor-default'></tr>");
-      _trElem.append("<td class='pl-5 pr-3 whitespace-no-wrap'><div class='text-gray-400'>Day " + _days[i].toNumber() + "</div></td>");
-      _trElem.append("<td class='px-2 py-2 whitespace-no-wrap'><div class='leading-5 text-gray-900'>" + _shares[i].toNumber() + " shares unclaimed</div></td>");
+      _trElem.append("<td class='pl-5 pr-3 whitespace-no-wrap'><div class='text-gray-400'>Day " + Number(_days[i]) + "</div></td>");
+      _trElem.append("<td class='px-2 py-2 whitespace-no-wrap'><div class='leading-5 text-gray-900'>" + Number(_shares[i]) + " shares unclaimed</div></td>");
       $("#table-member-lottery-history > table > tbody").prepend(_trElem);
       if (_days[i] != window.currentDay)
-        _shareSum += _shares[i].toNumber();
+        _shareSum += Number(_shares[i]);
     }
     if (_shareSum > 0 || Math.floor(new Date().getTime()/1000) > window.nextDayTime)
       $("#btn-claim-lottery").show();
@@ -141,14 +141,14 @@ function getOverviewData() {
   // });
 
   $.when(infuraKattContract.nextDayTime()).then(function( data, textStatus, jqXHR ) {
-    window.nextDayTime = data.toNumber();
+    window.nextDayTime = Number(data);
   });
 
   $.when(infuraKattContract.currentEra()).then(function( data, textStatus, jqXHR ) {
-    window.currentEra = data.toNumber();
+    window.currentEra = Number(data);
     $("#txt-current-era").text(window.currentEra);
     $.when(infuraKattContract.currentDay()).then(function( data, textStatus, jqXHR ) {
-      window.currentDay = data.toNumber();
+      window.currentDay = Number(data);
 
       getNetworkStateChangedFunctions(); // make sure that window.currentEra and window.currentDay are available
 
@@ -157,10 +157,10 @@ function getOverviewData() {
       $("#txt-progress-bar").text(eraProgress.toLocaleString(window.document.documentElement.lang)+"%");
       $("#txt-progress-bar").css("width",eraProgress+"%");
       $.when(infuraKattContract.mapEraDay_LotteryMemberCount(window.currentEra,window.currentDay)).then(function( data, textStatus, jqXHR ) {
-        $("#txt-lottery-total-participants").text(data.toNumber());
+        $("#txt-lottery-total-participants").text(Number(data));
       });
       $.when(infuraKattContract.mapEraDay_LotteryTotalShares(window.currentEra,window.currentDay)).then(function( data, textStatus, jqXHR ) {
-        $("#txt-lottery-total-points").text(data.toNumber());
+        $("#txt-lottery-total-points").text(Number(data));
       });
     });
   });
